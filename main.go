@@ -11,9 +11,9 @@ import (
 // Item Model
 type Item struct {
 	gorm.Model
-	Name        string
-	Description string
-	Upvotes     int
+	Name        string `json:"name"`
+	Description string `json:"description"`
+	Upvotes     int    `json:"upvotes"`
 }
 
 // DB export
@@ -38,7 +38,15 @@ func upvote(c *gin.Context) {
 }
 
 func postItem(c *gin.Context) {
-	c.JSON(200, gin.H{"message": "Post Item"})
+	db := GetDB()
+	item := &Item{}
+	c.BindJSON(&item)
+	if len(item.Name) <= 0 || len(item.Description) <= 0 {
+		c.JSON(422, gin.H{"error": "validation"})
+	} else {
+		db.Create(&item)
+		c.JSON(201, item)
+	}
 }
 
 // Init func
