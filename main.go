@@ -25,8 +25,9 @@ func main() {
 	db.AutoMigrate(&Item{})
 
 	r := gin.Default()
+	r.LoadHTMLGlob("templates/*")
 	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{"message": "pong"})
+		c.HTML(200, "index.tmpl", gin.H{"title": "Welcome from GO LOL"})
 	})
 	r.POST("/", postItem)
 	r.GET("/upvote", upvote)

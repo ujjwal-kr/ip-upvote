@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP-UPVOTE</title>
+</head>
+<body>
+    <h1>
+        {{ .title }}
+    </h1>
+
+    <script>
+        function now() {
+            fetch("http://localhost:8080/upvote", {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'}
+            }).then(res => res.json())
+            .then(result => {
+                console.log(result)
+            })
+        }
+        now()
+    </script>
+</body>
+</html>
