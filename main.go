@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -13,9 +12,9 @@ import (
 // Item Model
 type Item struct {
 	gorm.Model
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Upvotes     int    `json:"upvotes"`
+	Name        string
+	Description string
+	Upvotes     int
 	ID          int
 }
 
@@ -38,9 +37,9 @@ func main() {
 
 	r.POST("/", postItem)
 	r.GET("/upvote/:id", upvote)
-	// r.Run(":8080")
-	port := os.Getenv("PORT")
-	r.Run(":" + port)
+	r.Run(":8080")
+	// port := os.Getenv("PORT")
+	// r.Run(":" + port)
 }
 
 func upvote(c *gin.Context) {
@@ -65,7 +64,7 @@ func upvote(c *gin.Context) {
 func postItem(c *gin.Context) {
 	db := GetDB()
 	item := &Item{}
-	c.BindJSON(&item)
+	c.Bind(&item)
 
 	if len(item.Name) <= 0 || len(item.Description) <= 0 {
 		c.JSON(422, gin.H{"error": "validation"})
@@ -73,7 +72,7 @@ func postItem(c *gin.Context) {
 	}
 
 	db.Create(&item)
-	c.JSON(201, item)
+	c.Redirect(302, "/")
 }
 
 // Init func
