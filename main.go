@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
@@ -14,6 +15,7 @@ type Item struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Upvotes     int    `json:"upvotes"`
+	ID          int
 }
 
 // DB export
@@ -34,12 +36,27 @@ func main() {
 	})
 
 	r.POST("/", postItem)
-	r.GET("/upvote", upvote)
+	r.GET("/upvote/:id", upvote)
 	r.Run(":8080")
 }
 
 func upvote(c *gin.Context) {
-	c.JSON(200, gin.H{"message": "upvoted"})
+	db := GetDB()
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		c.JSON(404, gin.H{"message": "Not Found"})
+		return
+	}
+	item := &Item{}
+	db.Where(&Item{ID: id}).First(&item)
+	if len(item.Name) <= 0 {
+		c.JSON(404, gin.H{"message": "Not Found"})
+		return
+	}
+	item.Upvotes = item.Upvotes + 1
+	db.Save(&item)
+	c.Redirect(302, "/")
+	return
 }
 
 func postItem(c *gin.Context) {
