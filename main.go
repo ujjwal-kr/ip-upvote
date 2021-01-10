@@ -26,9 +26,13 @@ func main() {
 
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*")
+
 	r.GET("/", func(c *gin.Context) {
-		c.HTML(200, "index.tmpl", gin.H{"title": "Welcome from GO LOL"})
+		var items []Item
+		db.Where(&Item{}).Find(&items)
+		c.HTML(200, "index.tmpl", gin.H{"items": items})
 	})
+
 	r.POST("/", postItem)
 	r.GET("/upvote", upvote)
 	r.Run(":8080")
@@ -42,12 +46,14 @@ func postItem(c *gin.Context) {
 	db := GetDB()
 	item := &Item{}
 	c.BindJSON(&item)
+
 	if len(item.Name) <= 0 || len(item.Description) <= 0 {
 		c.JSON(422, gin.H{"error": "validation"})
-	} else {
-		db.Create(&item)
-		c.JSON(201, item)
+		return
 	}
+
+	db.Create(&item)
+	c.JSON(201, item)
 }
 
 // Init func
