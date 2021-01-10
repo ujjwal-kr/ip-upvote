@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -18,6 +19,13 @@ type Item struct {
 	ID          int
 }
 
+// Upvoters strict
+type Upvoters struct {
+	gorm.Model
+	IP     string
+	ItemID string
+}
+
 // DB export
 var DB *gorm.DB
 
@@ -25,6 +33,7 @@ func main() {
 	db := Init()
 
 	db.AutoMigrate(&Item{})
+	db.AutoMigrate(&Upvoters{})
 
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*")
@@ -37,9 +46,9 @@ func main() {
 
 	r.POST("/", postItem)
 	r.GET("/upvote/:id", upvote)
-	r.Run(":8080")
-	// port := os.Getenv("PORT")
-	// r.Run(":" + port)
+	// r.Run(":8080")
+	port := os.Getenv("PORT")
+	r.Run(":" + port)
 }
 
 func upvote(c *gin.Context) {
