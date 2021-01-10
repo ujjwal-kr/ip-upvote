@@ -4,32 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IP-UPVOTE</title>
+    <style>
+        body {
+            font-family: monospace;
+            font-size: 1.2em;
+            margin: 3%;
+        }
+    </style>
 </head>
 <body>
     <h1>
-        SUP
+        IP-UPVOTE
     </h1>
     <br>
     <div>
         {{ range .items }}
         <h1>{{ .Name }}</h1>
         <h3> {{ .Description }} </h3>
-        <h4> Upvotes: {{ .Upvotes }} </h4>
+        <h4 id = {{ .ID }}> Upvotes: {{ .Upvotes }} </h4>
+        <form action="/upvote/{{ .ID }}">
+            <button>Upvote</button>
+        </form>
         {{ end }}
     </div>
     <br>
-
-    <script>
-        function now() {
-            fetch("http://localhost:8080/upvote", {
-                method: 'GET',
-                headers: {'Content-Type': 'application/json'}
-            }).then(res => res.json())
-            .then(result => {
-                console.log(result)
-            })
-        }
-        now()
-    </script>
 </body>
 </html>
