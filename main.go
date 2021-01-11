@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -23,7 +22,7 @@ type Item struct {
 type Upvoters struct {
 	gorm.Model
 	IP     string
-	ItemID string
+	ItemID int
 }
 
 // DB export
@@ -46,9 +45,9 @@ func main() {
 
 	r.POST("/", postItem)
 	r.GET("/upvote/:id", upvote)
-	// r.Run(":8080")
-	port := os.Getenv("PORT")
-	r.Run(":" + port)
+	r.Run(":8080")
+	// port := os.Getenv("PORT")
+	// r.Run(":" + port)
 }
 
 func upvote(c *gin.Context) {
@@ -62,6 +61,11 @@ func upvote(c *gin.Context) {
 	db.Where(&Item{ID: id}).First(&item)
 	if len(item.Name) <= 0 {
 		c.JSON(404, gin.H{"message": "Not Found"})
+		return
+	}
+	upvoter := &Upvoters{}
+	db.Where(&Upvoters{IP: "ip-goes-here", ItemID: item.ID}).First(&upvoter)
+	if len(upvoter.IP) > 0 {
 		return
 	}
 	item.Upvotes = item.Upvotes + 1
