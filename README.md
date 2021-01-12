@@ -17,7 +17,9 @@ I reverse engineered the UrbanDictionary upvote system, written in golang. And I
 I noticed this when I tried to upvote with an Incongnito [private] window open on my laptop. And after that when I tried to upvote with my phone, [which was on the same network as laptop] but it was already upvoted. Which is may sound like a great idea but is pointless, **just like my life**.
 
 As, a wise man said,
->Saving critical entities with IP addresses is a bad idea because IP addresses will mostly be dynamic and a new one can be obtained simply by researting the router or toggling the airplane mode on a mobile device, leading to multiple entities, leading to confusion of the highest level as **now you can vote for a word 30 times a minute** but a user was only supposed to do once.
+>Saving critical entities with IP addresses is a bad idea because IP addresses will mostly be dynamic and a new one can be obtained simply by restarting the router or toggling the airplane mode on a mobile device, leading to multiple entities, then to confusion of the highest level to a literal spam as **now you can vote for a word 30 times a minute** (by everytime restarting the network) but a user was only supposed to do once.
+
+This works because of the fact that the IP address of a device changes after restarting.
 
 
 
