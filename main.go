@@ -67,7 +67,7 @@ func upvote(c *gin.Context) {
 	upvoter := &Upvoters{}
 	db.Where(&Upvoters{IP: ip, ItemID: item.ID}).First(&upvoter)
 	if len(upvoter.IP) > 0 {
-		c.Redirect(302, "/")
+		c.HTML(200, "err.tmpl", gin.H{"message": "already upvoted, for god's sake dont try to spam"})
 		return
 	}
 	db.Create(&Upvoters{IP: ip, ItemID: item.ID})
