@@ -22,7 +22,7 @@ As a wise man once said,
 This works because of the fact that the IP address of a device changes after restarting. And hence the user is allowed to upvote multiple times which is worrying.
 
 ## My Project
-This project is built with GO and SQLite which I have never used together before for a demo app. Maybe I used them as I like to suffer. But I'm happy with the functionality tho.
+This project is built with GO and SQLite which I have never used together before for a demo app. Maybe I used them as I like to suffer. But I'm happy with the functionality.
 
 * My project is the clone of the exact same system but has much worse styles *because I suck at styling*
 * You can add items and vote for them once.
