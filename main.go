@@ -38,9 +38,11 @@ func main() {
 	r.LoadHTMLGlob("templates/*")
 
 	r.GET("/", func(c *gin.Context) {
+		var ips []Upvoters
 		var items []Item
 		db.Where(&Item{}).Find(&items)
-		c.HTML(200, "index.tmpl", gin.H{"items": items})
+		db.Where(&Upvoters{}).Find(&ips)
+		c.HTML(200, "index.tmpl", gin.H{"items": items, "ips": ips})
 	})
 
 	r.POST("/", postItem)
@@ -52,6 +54,7 @@ func main() {
 
 func upvote(c *gin.Context) {
 	db := GetDB()
+	ip := c.GetHeader("x-forwarded-for")
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(404, gin.H{"message": "Not Found"})
@@ -64,10 +67,12 @@ func upvote(c *gin.Context) {
 		return
 	}
 	upvoter := &Upvoters{}
-	db.Where(&Upvoters{IP: "ip-goes-here", ItemID: item.ID}).First(&upvoter)
+	db.Where(&Upvoters{IP: ip, ItemID: item.ID}).First(&upvoter)
 	if len(upvoter.IP) > 0 {
+		c.Redirect(302, "/")
 		return
 	}
+	db.Create(&Upvoters{IP: ip, ItemID: item.ID})
 	item.Upvotes = item.Upvotes + 1
 	db.Save(&item)
 	c.Redirect(302, "/")
