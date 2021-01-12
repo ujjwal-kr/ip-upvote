@@ -2,7 +2,7 @@
 
 demo: http://ip-upvote-demo.herokuapp.com
 
-I reverse engineered the UrbanDictionary upvote system, written in golang. And I don't really care what the original upvoter is built with.
+I reverse engineered the UrbanDictionary upvote system, in golang. And I don't really care what the original upvoter is built with.
 ## Why Do I do this type of stuff ?
 * *I love to waste my time.*
 
