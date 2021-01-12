@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -47,9 +48,9 @@ func main() {
 
 	r.POST("/", postItem)
 	r.GET("/upvote/:id", upvote)
-	r.Run(":8080")
-	// port := os.Getenv("PORT")
-	// r.Run(":" + port)
+	// r.Run(":8080")
+	port := os.Getenv("PORT")
+	r.Run(":" + port)
 }
 
 func upvote(c *gin.Context) {
