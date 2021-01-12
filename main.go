@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -39,18 +38,16 @@ func main() {
 	r.LoadHTMLGlob("templates/*")
 
 	r.GET("/", func(c *gin.Context) {
-		var ips []Upvoters
 		var items []Item
 		db.Where(&Item{}).Find(&items)
-		db.Where(&Upvoters{}).Find(&ips)
-		c.HTML(200, "index.tmpl", gin.H{"items": items, "ips": ips})
+		c.HTML(200, "index.tmpl", gin.H{"items": items})
 	})
 
 	r.POST("/", postItem)
 	r.GET("/upvote/:id", upvote)
-	// r.Run(":8080")
-	port := os.Getenv("PORT")
-	r.Run(":" + port)
+	r.Run(":8080")
+	// port := os.Getenv("PORT")
+	// r.Run(":" + port)
 }
 
 func upvote(c *gin.Context) {
