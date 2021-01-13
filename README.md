@@ -31,7 +31,7 @@ This project is built with GO and SQLite which I have never used together before
 **Please don't do this to the main UrbanDictionary website, I will soon reach out those guys about this issue**
 
 ## Some real threat
-I'm just saying, I think someone can use buch of automated VPN proxies to make literally thousands of requests to the upvote system. And making it undetectable will be like a walk in the park.
+I'm just saying, I think someone can use bunch of automated VPN proxies to make literally thousands of requests to the upvote system. And making it undetectable will be like a walk in the park.
 
 
 
