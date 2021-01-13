@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"sync"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/sqlite"
@@ -53,6 +54,7 @@ func main() {
 
 func upvote(c *gin.Context) {
 	db := GetDB()
+	var wg sync.WaitGroup
 	ip := c.GetHeader("x-forwarded-for")
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -71,7 +73,11 @@ func upvote(c *gin.Context) {
 		c.HTML(200, "err.tmpl", gin.H{"message": "already upvoted, for god's sake dont try to spam"})
 		return
 	}
-	db.Create(&Upvoters{IP: ip, ItemID: item.ID})
+	wg.Add(1)
+	go func() {
+		db.Create(&Upvoters{IP: ip, ItemID: item.ID})
+		wg.Done()
+	}()
 	item.Upvotes = item.Upvotes + 1
 	db.Save(&item)
 	c.Redirect(302, "/")
