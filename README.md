@@ -14,7 +14,7 @@ I reverse engineered the UrbanDictionary upvote system, in golang. And I don't r
 * The system allows the users to upvote with their IP addresses.
 * This results having a single upvote from your network, and nothing more.
 
-I noticed this when I tried to upvote with an Incongnito [private] window open on my laptop. And after that when I tried to upvote with my phone, [which was on the same network as laptop] but it was already upvoted. Which is may sound like a great idea but is meaningless, **just like my life**.
+I noticed this when I tried to upvote with an Incongnito [private] window open on my laptop. And after that when I tried to upvote with my phone, [which was on the same network as laptop] but it was already upvoted. Which is may sound like a great idea but is mostly a failure, **just like my life**.
 
 As a wise man once said,
 >Saving critical entities with IP addresses is a bad idea because IP addresses will mostly be dynamic and a new one can be obtained simply by restarting the router or toggling the airplane mode on a mobile device, leading to multiple entities, then to confusion of the highest level to a literal spam as **now you can vote for a word 30 times a minute** (by everytime restarting the network) but a user was only supposed to do once.
